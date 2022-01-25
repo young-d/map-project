@@ -4,6 +4,8 @@ import useAxios from '../../hooks/useAxios';
 import { thousandUnitNumber, wonUnitNumber } from '../../utils/numberFormat';
 import { useHistory, useParams } from 'react-router-dom';
 import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
+import SideBar from '../../components/SideBar';
+import styled from '@emotion/styled';
 
 const DEFAULT_ASSET_PNU = '1168010600110020000';
 
@@ -63,26 +65,27 @@ const Main = () => {
     });
   }, [value]);
 
-  const handleToggleAddress = () => {
-    setAddressToggled(prevState => !prevState);
-  };
-
   const handleClickMapArea = e => {
     const coord = e.coord;
 
     if (coord) {
-      !markInit && setMarkInit(prevState => !prevState);
       setCurrentPointer({ lat: e.coord.y, lng: e.coord.x });
       fetchData();
+
+      if (!markInit) {
+        setMarkInit(prevState => !prevState);
+        history.push(`/property/${DEFAULT_ASSET_PNU}`);
+      }
     }
   };
 
-  useEffect(() => {
-    markInit && history.push(`/property/${DEFAULT_ASSET_PNU}`);
-  }, [markInit]);
+  const handleToggleAddress = () => {
+    setAddressToggled(prevState => !prevState);
+  };
 
   return (
-    <>
+    <MainContainer>
+      <SideBar />
       <RenderAfterNavermapsLoaded
         clientId={process.env.REACT_APP_NAVER_CLOUD_CLIENT_ID}
         error={<p>Maps Load Error</p>}
@@ -94,8 +97,14 @@ const Main = () => {
           markInit={markInit}
         />
       </RenderAfterNavermapsLoaded>
-    </>
+    </MainContainer>
   );
 };
+
+const MainContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+`;
 
 export default Main;

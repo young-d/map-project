@@ -58,7 +58,7 @@ const Map = ({ assetDetail, isLoading = false, onClick, markInit = false }) => {
 };
 
 const Wrapper = styled.main`
-  width: 86%;
+  width: calc(100% - 375px);
   height: 100%;
 `;
 

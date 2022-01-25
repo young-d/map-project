@@ -1,5 +1,5 @@
 import React from 'react';
-import Map from '../src/components/Map';
+import Main from '../src/pages/Main';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Global, css } from '@emotion/react';
 import emotionReset from 'emotion-reset';
@@ -8,7 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Map} />
+        <Route exact path="/">
+          <Main />
+        </Route>
       </Switch>
       <Global
         styles={css`
@@ -20,22 +22,18 @@ function App() {
           }
 
           .marker {
-            background-image: url('https://vos.land/published_raw/img/default-hexagon.svg');
-            min-width: 232px;
-            min-height: 232px;
+            background-image: url('https://user-images.githubusercontent.com/70619304/150925831-69dde97d-31bc-4119-9c94-e0719534b762.png');
             background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
 
             &__asset-info {
-              width: 120px;
               color: #fff;
-              font-size: 1.2em;
               text-align: center;
               padding-bottom: 24px;
 
-              &__jibun {
+              &__address {
                 font-weight: bold;
                 margin: 16px 0;
               }
@@ -46,6 +44,22 @@ function App() {
                 padding: 4px 8px;
                 white-space: nowrap;
               }
+            }
+            -webkit-animation: rotate 10s linear infinite;
+            animation-play-state: paused;
+          }
+
+          @-webkit-keyframes rotate {
+            from {
+              -webkit-transform: rotate(0deg);
+            }
+            to {
+              -webkit-transform: rotate(360deg);
+            }
+          }
+
+          .marker.loading {
+              animation-play-state: running;
             }
           }
         `}

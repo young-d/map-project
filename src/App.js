@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={['/', '/property/:asset_pnu']}>
           <Main />
         </Route>
       </Switch>

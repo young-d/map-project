@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Map from '../../components/Map';
 import useAxios from '../../hooks/useAxios';
 import { thousandUnitNumber, wonUnitNumber } from '../../utils/numberFormat';
-import useQuery from '../../hooks/useQuery';
+import { useHistory, useParams } from 'react-router-dom';
 import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
 
 const DEFAULT_ASSET_PNU = '1168010600110020000';
 
 const Main = () => {
-  const asset_pnu = useQuery().get('asset_pnu');
+  const history = useHistory();
+  const { asset_pnu } = useParams();
   const [data, fetchData] = useAxios(
     `/api/asset/all-processed-data?asset_pnu=${asset_pnu || DEFAULT_ASSET_PNU}`
   );
@@ -75,6 +76,10 @@ const Main = () => {
       fetchData();
     }
   };
+
+  useEffect(() => {
+    markInit && history.push(`/property/${DEFAULT_ASSET_PNU}`);
+  }, [markInit]);
 
   return (
     <>

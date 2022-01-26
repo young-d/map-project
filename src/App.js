@@ -1,5 +1,6 @@
 import React from 'react';
 import Main from '../src/pages/Main';
+import Error from '../src/pages/Error';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Global, css } from '@emotion/react';
 import emotionReset from 'emotion-reset';
@@ -10,6 +11,12 @@ function App() {
       <Switch>
         <Route exact path={['/', '/property/:asset_pnu']}>
           <Main />
+        </Route>
+        <Route exact path={'/error'}>
+          <Error />
+        </Route>
+        <Route>
+          <Error />
         </Route>
       </Switch>
       <Global

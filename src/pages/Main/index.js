@@ -28,35 +28,39 @@ const Main = () => {
   useEffect(() => {
     if (!value?.assetOverviewMulti || !value?.centerPoint) return;
 
-    const {
-      assetOverviewMulti: {
-        assetName,
-        assetAddress,
-        roadNameAddress,
-        assetValue: { estimatePrice: price },
-        landsData: { assetLandArea: landArea },
-        buildingData: { groundFloorArea: buildingArea },
-      },
-      centerPoint: { streetViewTarget: currentPointer },
-    } = value;
+    try {
+      const {
+        assetOverviewMulti: {
+          assetName,
+          assetAddress,
+          roadNameAddress,
+          assetValue: { estimatePrice: price },
+          landsData: { assetLandArea: landArea },
+          buildingData: { groundFloorArea: buildingArea },
+        },
+        centerPoint: { streetViewTarget: currentPointer },
+      } = value;
 
-    updateAsset({
-      assetAPI: {
-        name: assetName.trim(),
-        sidoAddress: assetAddress
-          .trim()
-          .split(' ')
-          .filter(word => word)
-          .slice(0, 2)
-          .join(' '),
-        assetAddress,
-        roadNameAddress,
-        price: wonUnitNumber(price),
-        landArea: `${thousandUnitNumber(Math.round(landArea))}`,
-        buildingArea: `${thousandUnitNumber(Math.round(buildingArea))}`,
-        initialPointer: { lat: currentPointer.y, lng: currentPointer.x },
-      },
-    });
+      updateAsset({
+        assetAPI: {
+          name: assetName.trim(),
+          sidoAddress: assetAddress
+            ?.trim()
+            .split(' ')
+            .filter(word => word)
+            .slice(0, 2)
+            .join(' '),
+          assetAddress,
+          roadNameAddress,
+          price: wonUnitNumber(price),
+          landArea: `${thousandUnitNumber(landArea)}`,
+          buildingArea: `${thousandUnitNumber(buildingArea)}`,
+          initialPointer: { lat: currentPointer?.y, lng: currentPointer?.x },
+        },
+      });
+    } catch (e) {
+      history.push('/error');
+    }
   }, [value]);
 
   const handleClickMapArea = e => {
@@ -71,6 +75,10 @@ const Main = () => {
       }
     }
   };
+
+  if (error) {
+    history.push('/error');
+  }
 
   return (
     <MainContainer>

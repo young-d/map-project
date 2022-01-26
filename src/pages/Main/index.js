@@ -4,8 +4,8 @@ import useAxios from '../../hooks/useAxios';
 import { thousandUnitNumber, wonUnitNumber } from '../../utils/numberFormat';
 import { useHistory, useParams } from 'react-router-dom';
 import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
-import SideBar from '../../components/SideBar';
 import styled from '@emotion/styled';
+import { useAssetContext } from '../../contexts/useAssetProvider';
 
 const DEFAULT_ASSET_PNU = '1168010600110020000';
 
@@ -16,12 +16,8 @@ const Main = () => {
     `/api/asset/all-processed-data?asset_pnu=${asset_pnu || DEFAULT_ASSET_PNU}`
   );
   const { isLoading, error, value } = data;
-  const [assetDetail, setAssetDetail] = useState({});
+  const { updateAsset } = useAssetContext();
   const [markInit, setMarkInit] = useState(asset_pnu ? true : false);
-  const [currentPointer, setCurrentPointer] = useState(
-    assetDetail?.initialPointer
-  );
-  const [addressToggled, setAddressToggled] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -42,26 +38,22 @@ const Main = () => {
       centerPoint: { streetViewTarget: currentPointer },
     } = value;
 
-    setAssetDetail({
-      name: assetName.trim(),
-      sidoAddress: assetAddress
-        .trim()
-        .split(' ')
-        .filter(word => word)
-        .slice(0, 2)
-        .join(' '),
-      detailAddress: !addressToggled
-        ? assetAddress
-            .trim()
-            .split(' ')
-            .filter(word => word)
-            .slice(2, 4)
-            .join(' ')
-        : roadNameAddress.trim().split(' ').slice(2, 4).join(' '),
-      price: wonUnitNumber(price),
-      landArea: `${thousandUnitNumber(Math.round(landArea))}`,
-      buildingArea: `${thousandUnitNumber(Math.round(buildingArea))}`,
-      initialPointer: { lat: currentPointer.y, lng: currentPointer.x },
+    updateAsset({
+      assetAPI: {
+        name: assetName.trim(),
+        sidoAddress: assetAddress
+          .trim()
+          .split(' ')
+          .filter(word => word)
+          .slice(0, 2)
+          .join(' '),
+        assetAddress,
+        roadNameAddress,
+        price: wonUnitNumber(price),
+        landArea: `${thousandUnitNumber(Math.round(landArea))}`,
+        buildingArea: `${thousandUnitNumber(Math.round(buildingArea))}`,
+        initialPointer: { lat: currentPointer.y, lng: currentPointer.x },
+      },
     });
   }, [value]);
 
@@ -69,7 +61,6 @@ const Main = () => {
     const coord = e.coord;
 
     if (coord) {
-      setCurrentPointer({ lat: e.coord.y, lng: e.coord.x });
       fetchData();
 
       if (!markInit) {
@@ -79,19 +70,14 @@ const Main = () => {
     }
   };
 
-  const handleToggleAddress = () => {
-    setAddressToggled(prevState => !prevState);
-  };
-
   return (
     <MainContainer>
-      <SideBar />
+      {/* <SideBar assetDetail={assetDetail} isLoading={isLoading} /> */}
       <RenderAfterNavermapsLoaded
         clientId={process.env.REACT_APP_NAVER_CLOUD_CLIENT_ID}
         error={<p>Maps Load Error</p>}
         loading={<p>Maps Loading...</p>}>
         <Map
-          assetDetail={{ ...assetDetail, currentPointer }}
           isLoading={isLoading}
           onClick={handleClickMapArea}
           markInit={markInit}

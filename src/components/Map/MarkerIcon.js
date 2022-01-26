@@ -10,13 +10,6 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
     detailAddress: '',
     price: '',
   });
-  const [delayLoading, setDelayLoading] = useState(isLoading);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setDelayLoading(isLoading);
-    }, 10);
-  }, [isLoading]);
 
   useEffect(() => {
     if (Object.keys(assetAPI).length > 0) {

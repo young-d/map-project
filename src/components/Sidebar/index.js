@@ -2,6 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Address from './Address';
 import { useAssetContext } from '../../contexts/useAssetProvider';
+import { BiChevronRight } from 'react-icons/bi';
+import { IoIosSearch } from 'react-icons/io';
+import { BsHeart } from 'react-icons/bs';
+import { GoPrimitiveDot } from 'react-icons/go';
 
 const profitRatio = 4.2;
 const LOGO_IMAGE_URL =
@@ -12,7 +16,12 @@ const ASSET_IMAGE_URL =
 const SideBar = ({ isLoading = false }) => {
   const { assetState } = useAssetContext();
   const { name, landArea, buildingArea, price } = assetState?.assetAPI;
-  const assetValues = [landArea, buildingArea, price, profitRatio];
+  const assetValues = [
+    { subject: '토지', content: landArea, unit: 'm²' },
+    { subject: '건물', content: buildingArea, unit: 'm² ' },
+    { subject: '추정가', content: price, unit: '원' },
+    { subject: '수익률', content: profitRatio, unit: '%' },
+  ];
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -23,6 +32,14 @@ const SideBar = ({ isLoading = false }) => {
       <Header>
         <img src={LOGO_IMAGE_URL} />
         <input type="text" name="search-bar" />
+        <IoIosSearch
+          style={{
+            position: 'absolute',
+            right: '16px',
+            top: '16px',
+            fontSize: '1.6em',
+          }}
+        />
       </Header>
       <Outer>
         <TitleInner>
@@ -30,12 +47,37 @@ const SideBar = ({ isLoading = false }) => {
             <Address />
             <AssetName>{name}</AssetName>
           </Text>
+          <BsHeart style={{ fontSize: '1.4em' }} />
         </TitleInner>
         <AssetImage src={ASSET_IMAGE_URL}></AssetImage>
         <InfoInner>
           <Chart></Chart>
           <AssetValue>
-            <ValueItem></ValueItem>
+            {assetValues.map(({ subject, content, unit }, index) => {
+              return (
+                <ValueItem key={index}>
+                  {index === 2 && (
+                    <GoPrimitiveDot
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: -8,
+                        color: '#ff6565',
+                        fontSize: '1.3em',
+                      }}
+                    />
+                  )}
+                  <Subject>{subject}</Subject>
+                  <Content>{`${content} ${unit}`}</Content>
+                  <BiChevronRight
+                    style={{
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </ValueItem>
+              );
+            })}
           </AssetValue>
           <AssetHistory></AssetHistory>
         </InfoInner>
@@ -51,6 +93,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   img {
     width: 32px;
@@ -82,7 +125,7 @@ const TitleInner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 29px;
+  padding: 0 30px;
   position: sticky;
   top: 0;
   box-shadow: 4px 0 8px 0 #bebebe;
@@ -106,8 +149,7 @@ const AssetImage = styled.img`
 `;
 
 const InfoInner = styled.div`
-  height: 668px;
-  padding: 0 29px;
+  padding: 0 20px 44px 20px;
 `;
 
 const Chart = styled.section`
@@ -115,12 +157,25 @@ const Chart = styled.section`
 `;
 
 const AssetValue = styled.ul`
-  height: 180px;
-  border: 1px solid green;
+  width: 100%;
+  font-size: 1.16em;
 `;
 
 const ValueItem = styled.li`
   display: flex;
+  align-items: center;
+  line-height: 1.6em;
+  position: relative;
+`;
+
+const Subject = styled.span`
+  flex-basis: 40%;
+  font-weight: bold;
+  padding-left: 14px;
+`;
+
+const Content = styled.span`
+  letter-spacing: 0.1px;
 `;
 
 const AssetHistory = styled.section``;

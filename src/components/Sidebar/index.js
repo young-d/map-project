@@ -4,6 +4,10 @@ import Address from './Address';
 import { useAssetContext } from '../../contexts/useAssetProvider';
 
 const profitRatio = 4.2;
+const LOGO_IMAGE_URL =
+  'https://user-images.githubusercontent.com/70619304/150925831-69dde97d-31bc-4119-9c94-e0719534b762.png';
+const ASSET_IMAGE_URL =
+  'https://cdn.zeplin.io/61e115d5cfc3ec4f33ebb98f/assets/145F4566-F3E2-4959-97EC-69A1C88032E4.png';
 
 const SideBar = ({ isLoading = false }) => {
   const { assetState } = useAssetContext();
@@ -15,9 +19,9 @@ const SideBar = ({ isLoading = false }) => {
   }
 
   return (
-    <Wrapper>
+    <>
       <Header>
-        <img src="https://user-images.githubusercontent.com/70619304/150925831-69dde97d-31bc-4119-9c94-e0719534b762.png" />
+        <img src={LOGO_IMAGE_URL} />
         <input type="text" name="search-bar" />
       </Header>
       <Outer>
@@ -27,7 +31,7 @@ const SideBar = ({ isLoading = false }) => {
             <AssetName>{name}</AssetName>
           </Text>
         </TitleInner>
-        <AssetImage src="https://cdn.zeplin.io/61e115d5cfc3ec4f33ebb98f/assets/145F4566-F3E2-4959-97EC-69A1C88032E4.png"></AssetImage>
+        <AssetImage src={ASSET_IMAGE_URL}></AssetImage>
         <InfoInner>
           <Chart></Chart>
           <AssetValue>
@@ -36,24 +40,9 @@ const SideBar = ({ isLoading = false }) => {
           <AssetHistory></AssetHistory>
         </InfoInner>
       </Outer>
-    </Wrapper>
+    </>
   );
 };
-
-const Wrapper = styled.nav`
-  width: 375px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  &,
-  div,
-  section,
-  article,
-  ul {
-    background-color: #fff;
-  }
-`;
 
 const Header = styled.div`
   width: 100%;

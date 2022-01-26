@@ -73,7 +73,7 @@ const Main = () => {
 
   return (
     <MainContainer>
-      <SideBar isLoading={isLoading} />
+      <Wrapper>{!isLoading && <SideBar />}</Wrapper>
       <RenderAfterNavermapsLoaded
         clientId={process.env.REACT_APP_NAVER_CLOUD_CLIENT_ID}
         error={<p>Maps Load Error</p>}
@@ -92,6 +92,21 @@ const MainContainer = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+`;
+
+const Wrapper = styled.nav`
+  width: 375px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &,
+  div,
+  section,
+  article,
+  ul {
+    background-color: #fff;
+  }
 `;
 
 export default Main;

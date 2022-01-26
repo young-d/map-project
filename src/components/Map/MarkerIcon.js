@@ -32,11 +32,7 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
       ${
         !isLoading
           ? `<div class="marker__asset-info" style="font-size: ${markerSize?.fontSize}px">
-        <div class="marker__asset-info__address">
-        <span onClick={handleToggleAddress} style={{ ...style }}>
-        ${asset.detailAddress}
-      </span>
-        </div>
+        <div class="marker__asset-info__address">${asset.detailAddress}</div>
         <span class="marker__asset-info__price">${asset.price}</span>
         </div>`
           : ''

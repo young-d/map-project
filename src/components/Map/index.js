@@ -1,9 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { NaverMap } from 'react-naver-maps';
 import styled from '@emotion/styled';
 import MarkerIcon from './MarkerIcon';
 import { useAssetContext } from '../../contexts/useAssetProvider';
-import { useEffect } from 'react/cjs/react.development';
 
 const DEFAULT_LAT = 37.506608542;
 const DEFAULT_LNG = 127.065369677;

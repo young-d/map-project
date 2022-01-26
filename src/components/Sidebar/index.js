@@ -1,7 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Address from './Address';
+import { useAssetContext } from '../../contexts/useAssetProvider';
 
-const SideBar = () => {
+const profitRatio = 4.2;
+
+const SideBar = ({ isLoading = false }) => {
+  const { assetState } = useAssetContext();
+  const { name, landArea, buildingArea, price } = assetState?.assetAPI;
+  const assetValues = [landArea, buildingArea, price, profitRatio];
+
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
   return (
     <Wrapper>
       <Header>
@@ -11,8 +23,8 @@ const SideBar = () => {
       <Outer>
         <TitleInner>
           <Text>
-            <Address>서울 강남 대치동 948</Address>
-            <AssetName>오토웨이타워</AssetName>
+            <Address />
+            <AssetName>{name}</AssetName>
           </Text>
         </TitleInner>
         <AssetImage src="https://cdn.zeplin.io/61e115d5cfc3ec4f33ebb98f/assets/145F4566-F3E2-4959-97EC-69A1C88032E4.png"></AssetImage>
@@ -92,13 +104,6 @@ const Text = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const Address = styled.span`
-  font-size: 1.2em;
-  font-weight: bold;
-  height: 27px;
-  letter-spacing: -0.9px;
 `;
 
 const AssetName = styled.span`

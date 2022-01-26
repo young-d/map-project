@@ -1,4 +1,6 @@
 export const addressFormat = address => {
+  if (!address) return;
+
   return address
     .trim()
     .split(' ')

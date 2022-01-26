@@ -41,7 +41,11 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
     `,
   };
 
-  return <Marker position={currentPointer} icon={markerIcon} />;
+  return asset.detailAddress && asset.price ? (
+    <Marker position={currentPointer} icon={markerIcon} />
+  ) : (
+    ''
+  );
 };
 
 export default MarkerIcon;

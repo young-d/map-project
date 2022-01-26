@@ -53,7 +53,7 @@ const Map = ({ isLoading = false, onClick, markInit = false }) => {
         zoomOrigin={{ lng: currentPointer.lng, lat: currentPointer.lat }}
         onClick={handleClickMapArea}
         onZoomChanged={zoom => setZoom(() => zoom)}>
-        {!isLoading && markInit && zoom >= DEFAULT_ZOOM && (
+        {markInit && zoom >= DEFAULT_ZOOM && (
           <MarkerIcon
             markerSize={markerSize}
             isLoading={isLoading}

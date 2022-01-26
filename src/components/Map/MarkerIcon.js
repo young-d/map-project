@@ -10,6 +10,13 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
     detailAddress: '',
     price: '',
   });
+  const [delayLoading, setDelayLoading] = useState(isLoading);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDelayLoading(isLoading);
+    }, 10);
+  }, [isLoading]);
 
   useEffect(() => {
     if (Object.keys(assetAPI).length > 0) {
@@ -41,7 +48,7 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
     `,
   };
 
-  return !isLoading && <Marker position={currentPointer} icon={markerIcon} />;
+  return <Marker position={currentPointer} icon={markerIcon} />;
 };
 
 export default MarkerIcon;

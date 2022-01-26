@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Address from './Address';
+import ChartList from './ChartList';
 import { useAssetContext } from '../../contexts/useAssetProvider';
 import { BiChevronRight } from 'react-icons/bi';
 import { IoIosSearch } from 'react-icons/io';
@@ -37,7 +38,8 @@ const SideBar = ({ isLoading = false }) => {
             position: 'absolute',
             right: '16px',
             top: '16px',
-            fontSize: '1.6em',
+            fontSize: '24px',
+            cursor: 'pointer',
           }}
         />
       </Header>
@@ -47,11 +49,11 @@ const SideBar = ({ isLoading = false }) => {
             <Address />
             <AssetName>{name}</AssetName>
           </Text>
-          <BsHeart style={{ fontSize: '1.4em' }} />
+          <BsHeart style={{ fontSize: '20px', cursor: 'pointer' }} />
         </TitleInner>
         <AssetImage src={ASSET_IMAGE_URL}></AssetImage>
         <InfoInner>
-          <Chart></Chart>
+          <ChartList></ChartList>
           <AssetValue>
             {assetValues.map(({ subject, content, unit }, index) => {
               return (
@@ -60,10 +62,11 @@ const SideBar = ({ isLoading = false }) => {
                     <GoPrimitiveDot
                       style={{
                         position: 'absolute',
-                        top: 0,
-                        left: -8,
+                        top: 2,
+                        left: 12,
                         color: '#ff6565',
-                        fontSize: '1.3em',
+                        fontSize: '21px',
+                        cursor: 'pointer',
                       }}
                     />
                   )}
@@ -94,6 +97,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 1000;
 
   img {
     width: 32px;
@@ -129,6 +133,7 @@ const TitleInner = styled.div`
   position: sticky;
   top: 0;
   box-shadow: 4px 0 8px 0 #bebebe;
+  z-index: 1000;
 `;
 
 const Text = styled.article`
@@ -149,35 +154,35 @@ const AssetImage = styled.img`
 `;
 
 const InfoInner = styled.div`
+  position: relative;
   padding: 0 20px 44px 20px;
-`;
-
-const Chart = styled.section`
-  height: 80px;
+  z-index: 10;
 `;
 
 const AssetValue = styled.ul`
   width: 100%;
-  font-size: 1.16em;
+  font-size: 18px;
 `;
 
 const ValueItem = styled.li`
   display: flex;
   align-items: center;
-  line-height: 1.6em;
+  line-height: 27px;
   position: relative;
 `;
 
 const Subject = styled.span`
   flex-basis: 40%;
   font-weight: bold;
-  padding-left: 14px;
+  padding-left: 32px;
 `;
 
 const Content = styled.span`
   letter-spacing: 0.1px;
 `;
 
-const AssetHistory = styled.section``;
+const AssetHistory = styled.section`
+  height: 300px;
+`;
 
 export default SideBar;

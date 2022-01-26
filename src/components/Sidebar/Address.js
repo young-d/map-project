@@ -27,7 +27,7 @@ const Address = ({}) => {
 };
 
 const Wrapper = styled.div`
-  font-size: 1.16em;
+  font-size: 18px;
   line-height: 1.6;
   font-weight: bold;
   height: 27px;

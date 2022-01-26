@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Map from '../../components/Map';
+import Spinner from '../../components/Spinner';
 import SideBar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
 import { thousandUnitNumber, wonUnitNumber } from '../../utils/numberFormat';
@@ -73,7 +74,7 @@ const Main = () => {
 
   return (
     <MainContainer>
-      <Wrapper>{!isLoading && <SideBar />}</Wrapper>
+      <Wrapper>{!isLoading ? <SideBar /> : <Spinner />}</Wrapper>
       <RenderAfterNavermapsLoaded
         clientId={process.env.REACT_APP_NAVER_CLOUD_CLIENT_ID}
         error={<p>Maps Load Error</p>}

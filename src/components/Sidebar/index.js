@@ -14,7 +14,7 @@ const LOGO_IMAGE_URL =
 const ASSET_IMAGE_URL =
   'https://cdn.zeplin.io/61e115d5cfc3ec4f33ebb98f/assets/145F4566-F3E2-4959-97EC-69A1C88032E4.png';
 
-const SideBar = ({ isLoading = false }) => {
+const SideBar = () => {
   const { assetState } = useAssetContext();
   const { name, landArea, buildingArea, price } = assetState?.assetAPI;
   const assetValues = [
@@ -23,10 +23,6 @@ const SideBar = ({ isLoading = false }) => {
     { subject: '추정가', content: price, unit: '원' },
     { subject: '수익률', content: profitRatio, unit: '%' },
   ];
-
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
 
   return (
     <>

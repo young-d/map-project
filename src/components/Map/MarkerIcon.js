@@ -1,5 +1,5 @@
 import { Marker } from 'react-naver-maps';
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { useAssetContext } from '../../contexts/useAssetProvider';
 import { addressFormat } from '../../utils/addressFormat';
 
@@ -11,7 +11,7 @@ const MarkerIcon = ({ markerSize, isLoading, currentPointer }) => {
     price: '',
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (Object.keys(assetAPI).length > 0) {
       const { assetAddress, roadNameAddress, price } = assetAPI;
       setAsset({

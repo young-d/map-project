@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useLayoutEffect } from 'react';
 import { NaverMap } from 'react-naver-maps';
 import styled from '@emotion/styled';
 import MarkerIcon from './MarkerIcon';
@@ -22,7 +22,7 @@ const Map = ({ isLoading = false, onClick, markInit = false }) => {
     }
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     assetAPI?.currentPointer && setCurrentPointer(assetAPI.currentPointer);
   }, [assetAPI]);
 
